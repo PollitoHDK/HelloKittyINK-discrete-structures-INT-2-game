@@ -4,9 +4,10 @@ import java.util.HashMap;
 import java.util.Map;
 
 public class Graph<T> {
+    public Object[] distanceMatrix;
     private Map<T, Integer> nodeIndexes;
-    private T[] nodes;
-    private int[][] adjacencyMatrix;
+    public T[] nodes;
+    public int[][] adjacencyMatrix;
 
     public Graph(int size) {
         nodeIndexes = new HashMap<>();
