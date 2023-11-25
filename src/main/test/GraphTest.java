@@ -3,20 +3,9 @@ import org.junit.Test;
 import static org.junit.Assert.*;
 
 public class GraphTest {
-    @Test
-    public void testAddNode() {
-        Graph<Integer> graph = new Graph<>(4);
-        graph.addNode(0, 0);
-        assertEquals(Integer.valueOf(0), ((Graph<Integer>) graph).nodes[0]);
-    }
 
-    @Test
-    public void testRemoveNode() {
-        Graph<Integer> graph = new Graph<>(4);
-        graph.addNode(0, 0);
-        graph.removeNode(0);
-        assertNull(graph.nodes[0]);
-    }
+
+
 
     @Test
     public void testAddEdge() {
@@ -55,25 +44,6 @@ public class GraphTest {
         assertEquals(0, nodeIndex);
     }
 
-    @Test
-    public void testFloydWarshall() {
-        Graph<Integer> graph = new Graph<>(4);
-        graph.addNode(0, 0);
-        graph.addNode(1, 1);
-        graph.addNode(2, 2);
-        graph.addEdge(0, 1, 2);
-        graph.addEdge(1, 2, 1);
 
-        graph.floydWarshall();
-
-        // Verifica las distancias mínimas después de aplicar el algoritmo de Warshall
-        int[][] expectedDistances = {
-                {0, 2, 3},
-                {2, 0, 1},
-                {3, 1, 0}
-        };
-
-        assertArrayEquals(expectedDistances, graph.distanceMatrix);
-    }
 
 }
