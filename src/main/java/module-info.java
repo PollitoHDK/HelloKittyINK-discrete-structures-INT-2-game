@@ -1,6 +1,7 @@
 module com.example.animationg3 {
     requires javafx.controls;
     requires javafx.fxml;
+    requires org.junit.jupiter.api;
 
 
     opens com.example.animationg3 to javafx.fxml;

@@ -1,5 +1,5 @@
 package test;
-import model.*;
+import com.example.animationg3.model.*;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 
