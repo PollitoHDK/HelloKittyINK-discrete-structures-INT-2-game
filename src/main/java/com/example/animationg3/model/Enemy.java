@@ -30,7 +30,7 @@ public class Enemy {
         this.canvas = canvas;
         this.graphicsContext = this.canvas.getGraphicsContext2D();
         this.frame = 0;
-        this.position = new Position(120, 60);
+        this.position = new Position(720, 60);
         this.avatar = avatar;
         sprite = new Image(getClass().getResourceAsStream("/animations/enemy/test.png"), 50, 50, false, false);
 

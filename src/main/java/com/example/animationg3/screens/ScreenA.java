@@ -103,17 +103,18 @@ public class ScreenA {
             StaticBlock blocks2 = new StaticBlock(canvas, i,(int) canvas.getHeight()-50);
             blockarraylist.add(blocks2);
         }
-        for (int j = 50; j < canvas.getHeight(); j += 50) { // Ajusta el incremento según sea necesario
+        for (int j = 50; j < canvas.getHeight(); j += 50) {
             StaticBlock blocks3 = new StaticBlock(canvas,0,j);
             blockarraylist.add(blocks3);
         }
-        for (int j = 50; j < canvas.getHeight(); j += 50) { // Ajusta el incremento según sea necesario
+        for (int j = 50; j < canvas.getHeight(); j += 50) {
             StaticBlock blocks4 = new StaticBlock(canvas,(int)canvas.getWidth()-50,j);
             blockarraylist.add(blocks4);
         }
 
-        for (int i = 105; i < canvas.getWidth()-50; i += 105) { // Ajusta el incremento según sea necesario
-            for (int j = 105; j < canvas.getHeight()-50; j += 105) { // Ajusta el incremento según sea necesario
+
+        for (int i = 105; i < canvas.getWidth()-50; i += 105) {
+            for (int j = 105; j < canvas.getHeight()-50; j += 105) {
                 StaticBlock blocks = new StaticBlock(canvas,i,j);
                 blockarraylist.add(blocks);
             }

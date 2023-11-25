@@ -4,7 +4,7 @@ import javafx.scene.canvas.Canvas;
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.image.Image;
 
-public abstract class Block {
+public class Block {
     protected Canvas canvas;
     protected GraphicsContext graphicsContext;
     protected  Position position;

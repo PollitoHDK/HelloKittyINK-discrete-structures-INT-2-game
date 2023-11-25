@@ -6,8 +6,8 @@ import java.util.*;
 import java.util.function.Consumer;
 
 public class UnweightedGraph<T> implements Iterable <T>{
-    private boolean[][] adjacencyMatrix;
-    private Map<Integer, T> nodeLabels;
+    public boolean[][] adjacencyMatrix;
+    public Map<Integer, T> nodeLabels;
 
     public UnweightedGraph(int size) {
         adjacencyMatrix = new boolean[size][size];

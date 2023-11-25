@@ -32,8 +32,6 @@ public class BattleController implements Initializable {
             screenA.onKeyReleased(event);
         });
         // Hilo de Java
-
-
         new Thread(
                 () -> {
                     while (true) {
