@@ -85,7 +85,11 @@ public class Avatar {
             Image image = new Image(Objects.requireNonNull(getClass().getResourceAsStream("/animations/hero/attackRight/Link-Attack-Right-" + i + "-sized.png")),45,45,false,false);
             this.attacksRight.add(image);
         }
-        for (int i = 1; i <= 4; i++) {
+        for (int i=1; i<=5 ; i++){
+            Image image = new Image(Objects.requireNonNull(getClass().getResourceAsStream("/animations/hero/attackLeft/Link-Attack-Left-" + i + "-sized.png")),45,45,false,false);
+            this.attacksLeft.add(image);
+        }
+        for (int i = 1; i <= 6; i++) {
             Image image = new Image(Objects.requireNonNull(getClass().getResourceAsStream("/animations/hero/putBomb/link"+i+".png")), 45, 45, false, false);
             this.link.add(image);
         }
