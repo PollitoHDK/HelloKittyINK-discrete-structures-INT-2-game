@@ -49,6 +49,7 @@ public class ScreenA {
         generateBlocksGraph();
         EnemyMove();
         EnemyChecker();
+        playerChecker();
     }
     public void SaveEnemies(){
         enemies.add(new Enemy(canvas,avatar,blockarraylist));
@@ -63,13 +64,22 @@ public class ScreenA {
     public void EnemyChecker(){
         enemies.removeIf(enemy -> !enemy.isAlive());
     }
+    public void playerChecker(){
+        if(!avatar.getAlive()){
+            drawGameOver();
+        }
+    }
     public void generateBlocks(){
         for (Block block : blockarraylist) {
             block.paint();
         }
     }
     private void drawBackground() {
-        Image backgroundImage = new Image(Objects.requireNonNull(getClass().getResourceAsStream("/backgrounds/scene1.jpg")));
+        Image backgroundImage = new Image(Objects.requireNonNull(getClass().getResourceAsStream("/backgrounds/panelUP.jpg")));
+        graphicsContext.drawImage(backgroundImage, 0, 0, canvas.getWidth(), canvas.getHeight());
+    }
+    public void drawGameOver() {
+        Image backgroundImage = new Image(Objects.requireNonNull(getClass().getResourceAsStream("/backgrounds/GameOver.jpg")));
         graphicsContext.drawImage(backgroundImage, 0, 0, canvas.getWidth(), canvas.getHeight());
     }
     public void generateBlocksGraph(){

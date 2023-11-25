@@ -15,6 +15,7 @@ public class Avatar {
     // elementos graficos
     private int health;
     private Canvas canvas;
+    private boolean alive;
     private GraphicsContext graphicsContext;
     private ArrayList<Image> idlesRight;
     private ArrayList<Image> runsRight;
@@ -35,9 +36,9 @@ public class Avatar {
     private boolean xPressed;
     private ArrayList<Block> blocks;
     private UnweightedGraph<Block> blocksforGraph;
-    private List<Integer> nodesWithStaticBlocks;
     private ArrayList<Enemy> enemies;
     private static final double swordRange=50.0;
+    private static final double bombRange=90.0;
     private Bomb[] bombs;
     private Bomb bomb;
     private boolean putBomb;
@@ -45,14 +46,14 @@ public class Avatar {
     private long starTime;
     public Avatar(Canvas canvas){
         this.bombs = new Bomb[50];
-        this.health=5;
+        this.health=200;
         this.enemies= new ArrayList<>();
         this.blocks = new ArrayList<>();
         this.blocksforGraph = new UnweightedGraph<>(50);
         this.link = new ArrayList<>();
-
         this.canvas = canvas;
         this.graphicsContext = this.canvas.getGraphicsContext2D();
+        this.alive=true;
         // 0 is idle | 1 is run
         this.state = State.IDLERIGHT;
         this.frame = 0;
@@ -62,7 +63,6 @@ public class Avatar {
         this.runsLeft = new ArrayList<>();
         this.attacksLeft=new ArrayList<>();
         this.attacksRight=new ArrayList<>();
-
         this.position = new Position(60,60);
 
         for (int i = 1; i <=9; i++) {
@@ -192,6 +192,23 @@ public class Avatar {
                     graphicsContext.drawImage(link.get(4), position.getX(),position.getY());
                 } else if(System.currentTimeMillis() - starTime > 1000){
                     bombs[i].paint();
+                    for (Enemy enemy : enemies) {
+                        double distance = calculateDistance(bombs[i].getPosition(), enemy.getPosition());
+                        if (distance <= bombRange) {
+                            enemy.bombDamage();
+                            if (enemy.getHealth()==0){
+                                enemy.setAlive(false);
+                            }
+                        }
+                        double distance2 = calculateDistance(position, bombs[i].getPosition());
+                        if (distance2 <= bombRange) {
+                            bombDamage();
+                            if (getHealth()==0){
+                                setAlive(false);
+                            }
+                            break;
+                        }
+                    }
                 }
             }
         }
@@ -283,8 +300,23 @@ public class Avatar {
             position.setX(position.getX() + 7);
         }
     }
-
-
+    public void receiveDamage(){
+        this.health-=1;
+        System.out.println("Mi vida es "+health);
+    }
+    public void bombDamage(){
+        this.health-=10;
+        System.out.println("Mi vida es "+health);
+    }
+    public int getHealth() {
+        return health;
+    }
+    public void setAlive(boolean alive) {
+        this.alive = alive;
+    }
+    public boolean getAlive(){
+        return alive;
+    }
     private void moveLeft() {
         AtomicBoolean canMoveLeft = new AtomicBoolean(true);
 
@@ -350,6 +382,7 @@ public class Avatar {
     public void setEnemies(ArrayList<Enemy> enemies) {
         this.enemies= enemies;
     }
+
     private double calculateDistance(Position playerPosition, Position enemyPosition) {
         double deltaX = enemyPosition.getX() - playerPosition.getX();
         double deltaY = enemyPosition.getY() - playerPosition.getY();

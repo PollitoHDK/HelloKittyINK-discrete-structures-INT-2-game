@@ -10,9 +10,7 @@ import java.util.Objects;
 public class Enemy {
     private Canvas canvas;
     private Position position;
-    private int frame;
     private GraphicsContext graphicsContext;
-    private State state;
     private Avatar avatar;
     private Image sprite;
     private ArrayList<Block> blocks;
@@ -20,19 +18,20 @@ public class Enemy {
     private boolean alive;
     private Bomb[] bombs;
     private Bomb bomb;
-    private boolean putBomb;
     private long starTime;
+    private static final double bombRange=90.0;
+    private ArrayList<Avatar> avatars;
 
     public Enemy(Canvas canvas, Avatar avatar, ArrayList<Block> blocks) {
+        this.avatars = new ArrayList<>();
         this.bombs = new Bomb[190];
-        this.health=100;
+        this.health=600;
         this.blocks = blocks;
         this.canvas = canvas;
         this.graphicsContext = this.canvas.getGraphicsContext2D();
-        this.frame = 0;
         this.position = new Position(720, 60);
         this.avatar = avatar;
-        sprite = new Image(getClass().getResourceAsStream("/animations/enemy/test.png"), 50, 50, false, false);
+        sprite = new Image(Objects.requireNonNull(getClass().getResourceAsStream("/animations/enemy/test.png")), 50, 50, false, false);
 
         this.bomb = new Bomb(canvas,(int)position.getX(),(int)position.getY());
         this.alive=true;
@@ -69,12 +68,11 @@ public class Enemy {
     }
     public void generateBomb() {
         long currentTime = System.currentTimeMillis();
-        if (currentTime - starTime > 5000) {
+        if (currentTime - starTime > 3000) {
             for (int i = 0; i < bombs.length; i++) {
                 if (bombs[i] == null) {
                     bomb = new Bomb(canvas, (int) position.getX(), (int) position.getY());
                     bombs[i] = bomb;
-                    putBomb = false;
                     starTime = currentTime;
                     break;
                 }
@@ -83,6 +81,16 @@ public class Enemy {
         for (int i = 0; i < bombs.length; i++) {
             if (bombs[i] != null) {
                 bombs[i].paint();
+                bombs[i].paint();
+                for (Avatar avatar1 : avatars) {
+                    double distance = calculateDistance(bombs[i].getPosition(), avatar1.getPosition());
+                    if (distance <= bombRange) {
+                        avatar1.bombDamage();
+                        if (avatar1.getHealth()==0){
+                            avatar1.setAlive(false);
+                        }
+                    }
+                }
             }
         }
     }
@@ -144,9 +152,6 @@ public class Enemy {
     public void paint(){
         graphicsContext.drawImage(sprite, position.getX(), position.getY());
     }
-    public void setStaticBlocks(ArrayList<Block> Blocks) {
-        this.blocks = Blocks;
-    }
     private void moveInSquarePattern() {
         int step = 7; // Define the step size for each movement in the square pattern
         // Move in a square pattern until the player is within the detection radius
@@ -165,6 +170,10 @@ public class Enemy {
     }
     public void receiveDamage(){
         this.health-=1;
+        System.out.println("Mi vida es "+health);
+    }
+    public void bombDamage(){
+        this.health-=10;
         System.out.println("Mi vida es "+health);
     }
     public int getHealth() {
