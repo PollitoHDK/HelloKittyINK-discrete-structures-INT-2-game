@@ -89,7 +89,7 @@ public class Avatar {
             Image image = new Image(Objects.requireNonNull(getClass().getResourceAsStream("/animations/hero/attackLeft/Link-Attack-Left-" + i + "-sized.png")),45,45,false,false);
             this.attacksLeft.add(image);
         }
-        for (int i = 1; i <= 6; i++) {
+        for (int i = 2; i <= 6; i++) {
             Image image = new Image(Objects.requireNonNull(getClass().getResourceAsStream("/animations/hero/putBomb/link"+i+".png")), 45, 45, false, false);
             this.link.add(image);
         }
@@ -178,15 +178,19 @@ public class Avatar {
         // Pintar las bombas existentes
         for (int i = 0; i < bombs.length; i++) {
             if (bombs[i] != null) {
-                if(System.currentTimeMillis() - starTime < 500){
+               // if(System.currentTimeMillis() - starTime < 500){
+               //     graphicsContext.drawImage(link.get(0), position.getX(),position.getY());
+                if(System.currentTimeMillis() - starTime < 450){
                     graphicsContext.drawImage(link.get(0), position.getX(),position.getY());
-                }else if(System.currentTimeMillis() - starTime < 650){
+                } else if(System.currentTimeMillis() - starTime < 650){
                     graphicsContext.drawImage(link.get(1), position.getX(),position.getY());
-                } else if(System.currentTimeMillis() - starTime < 750){
+                } else if(System.currentTimeMillis() - starTime < 650){
                     graphicsContext.drawImage(link.get(2), position.getX(),position.getY());
-                }else if(System.currentTimeMillis() - starTime < 850){
+                } else if(System.currentTimeMillis() - starTime < 700){
                     graphicsContext.drawImage(link.get(3), position.getX(),position.getY());
-                } else if(System.currentTimeMillis() - starTime > 900){
+                } else if(System.currentTimeMillis() - starTime < 900){
+                    graphicsContext.drawImage(link.get(4), position.getX(),position.getY());
+                } else if(System.currentTimeMillis() - starTime > 1000){
                     bombs[i].paint();
                 }
             }

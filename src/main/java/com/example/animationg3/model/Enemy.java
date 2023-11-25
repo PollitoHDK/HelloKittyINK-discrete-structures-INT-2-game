@@ -25,7 +25,7 @@ public class Enemy {
 
     public Enemy(Canvas canvas, Avatar avatar, ArrayList<Block> blocks) {
         this.bombs = new Bomb[190];
-        this.health=20;
+        this.health=100;
         this.blocks = blocks;
         this.canvas = canvas;
         this.graphicsContext = this.canvas.getGraphicsContext2D();
