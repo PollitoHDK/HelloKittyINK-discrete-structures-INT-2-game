@@ -26,12 +26,11 @@ public class HelloApplication extends Application {
         }catch (IOException exception){
             exception.printStackTrace();
         }
-
     }
     public static void battleView(String fxml){
         try {
             FXMLLoader fxmlLoader = new FXMLLoader(HelloApplication.class.getResource(fxml));
-            Scene scene = new Scene(fxmlLoader.load(), 1200, 700);
+            Scene scene = new Scene(fxmlLoader.load(), 1200, 600);
             Stage stage=new Stage();
             stage.setTitle("Hello!");
             stage.setScene(scene);

@@ -20,7 +20,6 @@ public class Graph<T> {
             nodes[index] = node;
         }
     }
-
     public void removeNode(T node) {
         Integer index = nodeIndexes.get(node);
         if (index != null) {
@@ -32,7 +31,6 @@ public class Graph<T> {
             }
         }
     }
-
     public void addEdge(T source, T destination, int weight) {
         Integer sourceIndex = nodeIndexes.get(source);
         Integer destinationIndex = nodeIndexes.get(destination);
@@ -109,8 +107,6 @@ public class Graph<T> {
             System.out.println();
         }
     }
-
-
     @Override
     public String toString() {
         StringBuilder result = new StringBuilder();

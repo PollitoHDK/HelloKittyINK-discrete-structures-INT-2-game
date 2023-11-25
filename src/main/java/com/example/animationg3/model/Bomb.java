@@ -35,7 +35,7 @@ public class Bomb {
             graphicsContext.drawImage(bomb.get(2), position.getX(), position.getY());
         } else if (System.currentTimeMillis() - starTime < 2000) {
             graphicsContext.drawImage(bomb.get(3), position.getX(), position.getY());
-        }else if (System.currentTimeMillis() - starTime < 2100) {
+        } else if (System.currentTimeMillis() - starTime < 2100) {
             graphicsContext.drawImage(bomb.get(4), position.getX(), position.getY());
         }
     }
