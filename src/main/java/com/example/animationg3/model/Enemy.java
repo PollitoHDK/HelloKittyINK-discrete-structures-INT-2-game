@@ -5,6 +5,7 @@ import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.image.Image;
 
 import java.util.ArrayList;
+import java.util.Objects;
 
 public class Enemy {
     private Canvas canvas;
@@ -17,9 +18,14 @@ public class Enemy {
     private ArrayList<Block> blocks;
     private int health;
     private boolean alive;
+    private Bomb[] bombs;
+    private Bomb bomb;
+    private boolean putBomb;
+    private long starTime;
 
     public Enemy(Canvas canvas, Avatar avatar, ArrayList<Block> blocks) {
-        this.health=3;
+        this.bombs = new Bomb[190];
+        this.health=20;
         this.blocks = blocks;
         this.canvas = canvas;
         this.graphicsContext = this.canvas.getGraphicsContext2D();
@@ -27,11 +33,12 @@ public class Enemy {
         this.position = new Position(120, 60);
         this.avatar = avatar;
         sprite = new Image(getClass().getResourceAsStream("/animations/enemy/test.png"), 50, 50, false, false);
+
+        this.bomb = new Bomb(canvas,(int)position.getX(),(int)position.getY());
         this.alive=true;
     }
-
     public void move() {
-        double radius = 300; // Define the detection radius
+        double radius = 1500; // Define the detection radius
 
         if (isPlayerWithinRadius(radius)) {
             moveToPlayer();
@@ -39,6 +46,7 @@ public class Enemy {
             moveInSquarePattern();
         }
     }
+
     private double calculateDistance(Position playerPosition, Position enemyPosition) {
         double deltaX = enemyPosition.getX() - playerPosition.getX();
         double deltaY = enemyPosition.getY() - playerPosition.getY();
@@ -59,9 +67,25 @@ public class Enemy {
                 Up();
             }
     }
-
-
-
+    public void generateBomb() {
+        long currentTime = System.currentTimeMillis();
+        if (currentTime - starTime > 5000) {
+            for (int i = 0; i < bombs.length; i++) {
+                if (bombs[i] == null) {
+                    bomb = new Bomb(canvas, (int) position.getX(), (int) position.getY());
+                    bombs[i] = bomb;
+                    putBomb = false;
+                    starTime = currentTime;
+                    break;
+                }
+            }
+        }
+        for (int i = 0; i < bombs.length; i++) {
+            if (bombs[i] != null) {
+                bombs[i].paint();
+            }
+        }
+    }
     private void Right() {
         for (Block block : blocks) {
             if (position.getX() + 40 < block.getPosition().getX() &&
@@ -76,7 +100,6 @@ public class Enemy {
             position.setX(position.getX() + 10);
         }
     }
-
     private void Left() {
         for (Block block : blocks) {
             if (position.getX() > block.getPosition().getX() + 40 &&
@@ -104,13 +127,12 @@ public class Enemy {
             position.setY(position.getY() + 8);
         }
     }
-
     private void Up() {
         for (Block block : blocks) {
-            if (position.getY() > block.getPosition().getY() + 45 &&
-                    position.getY() <= block.getPosition().getY() + 55 &&
-                    position.getX() + 45 >= block.getPosition().getX() &&
-                    position.getX() <= block.getPosition().getX() + 45) {
+            if (position.getY() > block.getPosition().getY() + 40 &&
+                    position.getY() <= block.getPosition().getY() + 50 &&
+                    position.getX() + 40 >= block.getPosition().getX() &&
+                    position.getX() <= block.getPosition().getX() + 40) {
                 // Colisión hacia arriba
                 return;
             }
@@ -127,7 +149,6 @@ public class Enemy {
     }
     private void moveInSquarePattern() {
         int step = 7; // Define the step size for each movement in the square pattern
-
         // Move in a square pattern until the player is within the detection radius
         if (position.getX() < canvas.getWidth() - step && position.getY() == 0) {
             Right();
@@ -139,7 +160,6 @@ public class Enemy {
             Up();
         }
     }
-
     public Position getPosition() {
         return position;
     }
@@ -147,7 +167,6 @@ public class Enemy {
         this.health-=1;
         System.out.println("Mi vida es "+health);
     }
-
     public int getHealth() {
         return health;
     }

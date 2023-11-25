@@ -49,6 +49,4 @@ public class BattleController implements Initializable {
                 }
         ).start();
     }
-
-
 }

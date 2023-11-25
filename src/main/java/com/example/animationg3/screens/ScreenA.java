@@ -4,6 +4,7 @@ import com.example.animationg3.model.*;
 import com.example.animationg3.util.UnweightedGraph;
 import javafx.scene.canvas.Canvas;
 import javafx.scene.canvas.GraphicsContext;
+import javafx.scene.image.Image;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.layout.Background;
 import javafx.scene.paint.Color;
@@ -56,36 +57,39 @@ public class ScreenA {
         for(Enemy enemy: enemies){
                 enemy.move();
                 enemy.paint();
+                enemy.generateBomb();
             }
     }
     public void EnemyChecker(){
         enemies.removeIf(enemy -> !enemy.isAlive());
     }
-
     public void generateBlocks(){
         for (Block block : blockarraylist) {
             block.paint();
         }
     }
-
+    private void drawBackground() {
+        Image backgroundImage = new Image(Objects.requireNonNull(getClass().getResourceAsStream("/backgrounds/scene1.jpg")));
+        graphicsContext.drawImage(backgroundImage, 0, 0, canvas.getWidth(), canvas.getHeight());
+    }
     public void generateBlocksGraph(){
         blockGraph.forEachNode(Block::paint);
     }
     public void saveBlocks(){
         //destruible Blocks
         boolean randomBoolean = false;
-        for (int i = 53; i < canvas.getWidth()-50; i += 105) {
+        for (int i = 50; i < canvas.getWidth()-50; i += 105) {
             if(!randomBoolean)
-                i+=105;
-            for (int j = 105; j < canvas.getHeight()-53; j += 105) {
+                i+=50;
+            for (int j = 50; j < canvas.getHeight()-50; j += 105) {
                 DestruibleBlock blocks = new DestruibleBlock(canvas,i,j);
                 blockarraylist.add(blocks);
             }
         }
-        for (int i = 53; i < canvas.getWidth()-50; i += 105) {
+        for (int i = 50; i < canvas.getWidth()-50; i += 105) {
             if(!randomBoolean)
-                i+=53;
-            for (int j = 52; j < canvas.getHeight()-53; j += 105) {
+                i+=50;
+            for (int j = 50; j < canvas.getHeight()-50; j += 105) {
                 DestruibleBlock blocks = new DestruibleBlock(canvas,i,j);
                 blockarraylist.add(blocks);
             }
@@ -134,28 +138,22 @@ public class ScreenA {
             StaticBlock block1 = new StaticBlock(canvas, i, 0);
             blockGraph.addNode(generateNodeId(i, 0), block1);
         }
-
         for (int i = 0; i < canvas.getWidth(); i += 50) {
             StaticBlock block2 = new StaticBlock(canvas, i, (int) canvas.getHeight() - 50);
-            blockGraph.addNode(generateNodeId(i, (int) canvas.getHeight() - 50), block2);
+            blockGraph.addNode(generateNodeId(i, (int) canvas.getHeight()-50), block2);
         }
-
-        for (int j = 50; j < canvas.getHeight(); j += 55) {
+        for (int j = 50; j < canvas.getHeight(); j += 50) {
             StaticBlock block3 = new StaticBlock(canvas, 0, j);
             blockGraph.addNode(generateNodeId(0, j), block3);
         }
-
-        for (int j = 50; j < canvas.getHeight(); j += 55) {
-            StaticBlock block4 = new StaticBlock(canvas, (int) canvas.getWidth() - 50, j);
-            blockGraph.addNode(generateNodeId((int) canvas.getWidth() - 50, j), block4);
+        for (int j = 50; j < canvas.getHeight(); j += 50) {
+            StaticBlock block4 = new StaticBlock(canvas, (int) canvas.getWidth()-50, j);
+            blockGraph.addNode(generateNodeId((int) canvas.getWidth()-50, j), block4);
         }
     }
     private int generateNodeId(int x, int y) {
         return x / 50 + (y / 50) * (int) (canvas.getWidth() / 50);
     }
-
-
-
     public void onKeyPressed(KeyEvent event){
         this.avatar.onKeyPressed(event);
     }

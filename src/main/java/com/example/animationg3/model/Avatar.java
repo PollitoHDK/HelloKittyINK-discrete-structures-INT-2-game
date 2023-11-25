@@ -44,7 +44,7 @@ public class Avatar {
     private ArrayList<Image> link;
     private long starTime;
     public Avatar(Canvas canvas){
-        this.bombs = new Bomb[10];
+        this.bombs = new Bomb[50];
         this.health=5;
         this.enemies= new ArrayList<>();
         this.blocks = new ArrayList<>();
@@ -334,9 +334,6 @@ public class Avatar {
             position.setY(position.getY() - 7);
         }
     }
-
-
-
     public void setStaticBlocks(ArrayList<Block> blocks) {
         this.blocks = blocks;
     }
