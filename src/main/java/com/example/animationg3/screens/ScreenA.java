@@ -39,7 +39,8 @@ public class ScreenA {
     }
 
     public void paint() {
-        drawBackground();
+        graphicsContext.setFill(Color.BLACK);
+        graphicsContext.fillRect(0, 0, canvas.getWidth(), canvas.getHeight());
         avatar.paint();
         avatar.onAction();
         avatar.update();
@@ -68,7 +69,7 @@ public class ScreenA {
         }
     }
     private void drawBackground() {
-        Image backgroundImage = new Image(Objects.requireNonNull(getClass().getResourceAsStream("/backgrounds/panelUP.jpg")));
+        Image backgroundImage = new Image(Objects.requireNonNull(getClass().getResourceAsStream("/backgrounds/scene1.jpg")));
         graphicsContext.drawImage(backgroundImage, 0, 0, canvas.getWidth(), canvas.getHeight());
     }
     public void generateBlocksGraph(){
